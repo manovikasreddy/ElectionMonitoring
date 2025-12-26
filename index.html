@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Election Monitor System</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="header">
+    <h1>Election Monitor System</h1>
+  </header>
+
+  <div class="container">
+
+    <!-- LOGIN SECTION -->
+    <section id="loginSection" class="panel active">
+      <h2>Login</h2>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">User name</label>
+          <input type="text" id="username" placeholder="Enter your name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="roleSelect">Select role</label>
+          <select id="roleSelect" required>
+            <option value="">-- Choose role --</option>
+            <option value="citizen">Citizen</option>
+            <option value="observer">Observer</option>
+            <option value="analyst">Analyst</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
+
+      <p style="margin-top:10px;font-size:14px;">
+        Login decides which role dashboard you can view.
+      </p>
+    </section>
+
+    <!-- CURRENT USER BAR -->
+    <div id="userBar" class="user-bar" style="display:none;">
+      <span id="userLabel"></span>
+      <button id="logoutBtn" class="danger-btn">Logout</button>
+    </div>
+
+    <!-- ROLE BUTTONS (kept hidden so every user sees only own role) -->
+    <div id="roleButtons" class="role-btns" style="display:none;">
+      <button class="role-btn" onclick="changeRole('citizen')">Citizen</button>
+      <button class="role-btn" onclick="changeRole('observer')">Observer</button>
+      <button class="role-btn" onclick="changeRole('analyst')">Analyst</button>
+      <button class="role-btn" onclick="changeRole('admin')">Admin</button>
+    </div>
+
+    <!-- CITIZEN PANEL -->
+    <section id="citizen" class="panel">
+      <h2>Citizen Portal</h2>
+
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-number" id="totalVotes">1,25,000</div>
+          <div class="stat-label">Total Votes</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">Station 45</div>
+          <div class="stat-label">Your Station</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="location">🔍 Find Polling Station</label>
+        <input type="text" id="location" placeholder="Enter your area / pincode" />
+        <button onclick="findStation()">Search</button>
+      </div>
+
+      <h3>🚨 Report Issue</h3>
+      <form id="issueForm" onsubmit="reportIssue(event)">
+        <div class="form-group">
+          <label for="issueType">Issue Type</label>
+          <select id="issueType">
+            <option value="Technical">Technical</option>
+            <option value="Long Queue">Long Queue</option>
+            <option value="Irregularity">Irregularity</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="issueDesc">Description</label>
+          <textarea id="issueDesc" rows="3" placeholder="Describe what happened..."></textarea>
+        </div>
+
+        <button type="submit">Submit Report</button>
+      </form>
+    </section>
+
+    <!-- OBSERVER PANEL -->
+    <section id="observer" class="panel">
+      <h2>Election Observer</h2>
+
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-number" id="activeStations">2456</div>
+          <div class="stat-label">Active Stations</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="issuesToday">23</div>
+          <div class="stat-label">Issues Today</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="stationId">Station ID</label>
+        <input type="text" id="stationId" placeholder="Enter station ID" />
+        <button onclick="checkStation()">Check Status</button>
+      </div>
+
+      <button class="warning-btn" onclick="reportAnomaly()">🚨 Report Anomaly</button>
+    </section>
+
+    <!-- ANALYST PANEL -->
+    <section id="analyst" class="panel">
+      <h2>Data Analytics</h2>
+
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-number" id="turnout">67%</div>
+          <div class="stat-label">Turnout</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="transparency">94%</div>
+          <div class="stat-label">Transparency</div>
+        </div>
+      </div>
+
+      <canvas id="voteChart" height="120"></canvas>
+
+      <h3>All Reports</h3>
+      <div id="reportList" class="report-list">
+        No reports yet
+      </div>
+    </section>
+
+    <!-- ADMIN PANEL -->
+    <section id="admin" class="panel">
+      <h2>Admin Panel</h2>
+
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-number" id="userCount">1567</div>
+          <div class="stat-label">Users</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="systemStatus">✅ Online</div>
+          <div class="stat-label">Status</div>
+        </div>
+      </div>
+
+      <div class="admin-actions">
+        <button onclick="alert('Results verified successfully!')">✅ Verify Results</button>
+        <button onclick="alert('System audit started...')">🔍 Audit System</button>
+        <button class="danger-btn" onclick="clearAllReports()">🗑️ Clear Reports</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
