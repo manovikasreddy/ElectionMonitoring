@@ -9,6 +9,7 @@
 <body>
   <header class="header">
     <h1>Election Monitor System</h1>
+    <p>BTech 1st Year Project - Fair & Transparent Elections</p>
   </header>
 
   <div class="container">
@@ -21,6 +22,11 @@
         <div class="form-group">
           <label for="username">User name</label>
           <input type="text" id="username" placeholder="Enter your name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter password" required />
         </div>
 
         <div class="form-group">
@@ -37,9 +43,10 @@
         <button type="submit">Login</button>
       </form>
 
-      <p style="margin-top:10px;font-size:14px;">
-        Login decides which role dashboard you can view.
-      </p>
+      <div class="login-links">
+        <button type="button" class="link-btn" onclick="showCreateAccount()">Create account</button>
+        <button type="button" class="link-btn" onclick="forgotPassword()">Forgot password?</button>
+      </div>
     </section>
 
     <!-- CURRENT USER BAR -->
@@ -48,7 +55,7 @@
       <button id="logoutBtn" class="danger-btn">Logout</button>
     </div>
 
-    <!-- ROLE BUTTONS (kept hidden so every user sees only own role) -->
+    <!-- ROLE BUTTONS (kept hidden; each user sees only own role) -->
     <div id="roleButtons" class="role-btns" style="display:none;">
       <button class="role-btn" onclick="changeRole('citizen')">Citizen</button>
       <button class="role-btn" onclick="changeRole('observer')">Observer</button>

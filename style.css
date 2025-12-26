@@ -217,6 +217,26 @@ button:hover {
   font-size: 14px;
 }
 
+/* Login links */
+
+.login-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.link-btn {
+  background: transparent;
+  border: none;
+  color: #ffe082;
+  padding: 0;
+  margin-top: 0;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
 /* Responsive */
 
 @media (max-width: 768px) {

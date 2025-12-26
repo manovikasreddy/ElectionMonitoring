@@ -24,30 +24,29 @@ function setupLogin() {
     e.preventDefault();
 
     const username = document.getElementById("username").value.trim();
-    const role = document.getElementById("roleSelect").value;
+    const password = document.getElementById("password").value;
+    const selectedRole = document.getElementById("roleSelect").value;
 
-    if (!username || !role) {
-      alert("Enter user name and select role");
+    // Simple client‑side validation only
+    if (!username || !password || !selectedRole) {
+      alert("Please enter user name, password and select role");
       return;
     }
 
+    // In a real app, check credentials on the server.
     currentUser = username;
-    currentRole = role;
+    currentRole = selectedRole;
 
-    // show user bar
-    userLabel.textContent = `Logged in as: ${username} (${role})`;
+    userLabel.textContent = `Logged in as: ${username} (${currentRole})`;
     userBar.style.display = "flex";
 
-    // hide role buttons so each user sees only own panel
     roleButtons.style.display = "none";
 
-    // hide login
     const loginPanel = document.getElementById("loginSection");
     loginPanel.classList.remove("active");
     loginPanel.style.display = "none";
 
-    // show only this role panel
-    showPanel(role);
+    showPanel(currentRole);
   };
 
   logoutBtn.onclick = function () {
@@ -66,7 +65,7 @@ function setupLogin() {
   };
 }
 
-// if someone clicks hidden role buttons
+// called if hidden role buttons are clicked
 function changeRole(role) {
   alert("Each user can view only their own role dashboard after login.");
 }
@@ -77,6 +76,16 @@ function showPanel(role) {
   });
   const panel = document.getElementById(role);
   if (panel) panel.classList.add("active");
+}
+
+// -------- helper for links --------
+
+function showCreateAccount() {
+  alert("Create account: in a real system this would save username, password and role to secure storage or a backend.");
+}
+
+function forgotPassword() {
+  alert("Forgot password: in a real system this would send a reset link or verification code to the user.");
 }
 
 // -------- Citizen --------
@@ -141,13 +150,15 @@ function reportAnomaly() {
 
 function updateReportList() {
   const list = document.getElementById("reportList");
+  if (!list) return;
+
   if (reports.length === 0) {
     list.innerHTML = "No reports yet";
     return;
   }
 
   list.innerHTML = reports
-    .slice(-5)
+    .slice(-10)
     .map(
       (r) =>
         `<div class="report-item">
@@ -187,7 +198,7 @@ function initChart() {
       labels: ["Candidate A", "Candidate B", "Issues"],
       datasets: [
         {
-          data: [60, 40, 0],
+          data: [60, 40, reports.length],
           backgroundColor: ["#4CAF50", "#FFC107", "#F44336"],
         },
       ],
